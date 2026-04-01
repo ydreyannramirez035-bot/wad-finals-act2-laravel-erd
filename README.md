@@ -2,13 +2,13 @@
 
 This repository contains a Laravel-based implementation of a relational database schema. The project demonstrates the use of Eloquent relationships, including One-to-One, One-to-Many, and Many-to-Many, using an associative entity (Pivot table).
 
-## 📊 Entity Relationship Diagram (ERD)
+##  Entity Relationship Diagram (ERD)
 
 ![Entity Relationship Diagram](erd.png) 
 
 ---
 
-## 🛠️ Database Logic & Relationships
+##  Database Logic & Relationships
 
 ### 1. One-to-One: Customer & Profile
 * **Logic:** Each Customer is linked to exactly one Profile.
