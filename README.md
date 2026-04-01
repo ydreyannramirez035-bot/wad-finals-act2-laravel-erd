@@ -27,7 +27,7 @@ This repository contains a Laravel-based implementation of a relational database
 
 ---
 
-## 🚀 Key Files to Review
+## Key Files to Review
 
 * **Migrations:** `database/migrations/`
     * `create_customers_table.php`
