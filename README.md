@@ -1,58 +1,43 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel ERD Project: E-Commerce Database Implementation
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository contains a Laravel-based implementation of a relational database schema. The project demonstrates the use of Eloquent relationships, including One-to-One, One-to-Many, and a Many-to-Many relationship using an associative entity (Pivot table).
 
-## About Laravel
+## 📊 Entity Relationship Diagram (ERD)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![Entity Relationship Diagram](erd.png) 
+*(Note: Ensure the filename above matches the image file you upload to GitHub)*
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Database Logic & Relationships
 
-## Learning Laravel
+### 1. One-to-One: Customer & Profile
+* **Logic:** Each Customer is linked to exactly one Profile.
+* **Implementation:** The `profiles` table contains a `customer_id` with a **Unique Constraint** to prevent duplicate profiles for a single user.
+* **Eloquent:** `Customer` hasOne `Profile` | `Profile` belongsTo `Customer`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. One-to-Many: Customer & Order
+* **Logic:** A single Customer can place multiple Orders, but each Order belongs to only one Customer.
+* **Implementation:** The `orders` table holds the `customer_id` foreign key.
+* **Eloquent:** `Customer` hasMany `Order` | `Order` belongsTo `Customer`.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. Many-to-Many: Order & Product (Associative Entity)
+* **Logic:** An Order can contain multiple Products, and a Product can be part of multiple Orders.
+* **Associative Data:** To make the system functional for a real-world shop, I have added a **`quantity`** attribute to the pivot table (`order_product`). This allows the system to track how many units of a specific product were purchased in a single order.
+* **Eloquent:** Both models use `belongsToMany` with the `->withPivot('quantity')` method.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## 🚀 Key Files to Review
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
-```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* **Migrations:** `database/migrations/`
+    * `create_customers_table.php`
+    * `create_profiles_table.php`
+    * `create_orders_table.php`
+    * `create_products_table.php`
+    * `create_order_product_table.php` (Pivot Table)
+* **Models:** `app/Models/`
+    * `Customer.php`
+    * `Profile.php`
+    * `Order.php`
+    * `Product.php`
