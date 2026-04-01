@@ -1,11 +1,10 @@
 # Laravel ERD Project: E-Commerce Database Implementation
 
-This repository contains a Laravel-based implementation of a relational database schema. The project demonstrates the use of Eloquent relationships, including One-to-One, One-to-Many, and a Many-to-Many relationship using an associative entity (Pivot table).
+This repository contains a Laravel-based implementation of a relational database schema. The project demonstrates the use of Eloquent relationships, including One-to-One, One-to-Many, and Many-to-Many, using an associative entity (Pivot table).
 
 ## 📊 Entity Relationship Diagram (ERD)
 
 ![Entity Relationship Diagram](erd.png) 
-*(Note: Ensure the filename above matches the image file you upload to GitHub)*
 
 ---
 
