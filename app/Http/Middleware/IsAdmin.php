@@ -11,7 +11,7 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if (!Auth::check() || Auth::user()->role !== 'admin') {
-            abort(403, 'Admin access only.');
+            return redirect('/')->with('error', 'Admin access only.');
         }
 
         return $next($request);

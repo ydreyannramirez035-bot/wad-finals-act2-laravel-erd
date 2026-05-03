@@ -6,6 +6,8 @@
     justify-content: space-between;
     align-items: center;
     font-family: Arial;
+    position: relative;
+    z-index: 10;
 ">
 
     <!-- LEFT SIDE LINKS -->

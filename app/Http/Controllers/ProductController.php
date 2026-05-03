@@ -16,6 +16,8 @@ class ProductController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Product::class);
+
         return view('products.create');
     }
 
@@ -51,6 +53,8 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        $this->authorize('update', $product);
+
         $validated = $request->validate([
             'product_name' => 'required|string|max:255',
             'stock_quantity' => 'required|integer|min:0',
@@ -66,6 +70,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+        
+        $this->authorize('delete', $product);
+        
         $product->delete();
 
         return redirect()->route('products.index')

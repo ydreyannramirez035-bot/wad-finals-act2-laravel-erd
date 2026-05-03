@@ -24,7 +24,7 @@ class Kernel extends HttpKernel
 
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
-        'admin' => \App\Http\Middleware\IsAdmin::class,
+        'is_admin' => \App\Http\Middleware\IsAdmin::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div style="max-width: 700px; margin: auto;">
+<div style="max-width: 700px; margin: auto; position: relative; z-index: 1;">
 
     <h2 style="margin-bottom: 20px;">Create Order</h2>
 
@@ -72,4 +72,10 @@
     </form>
 
 </div>
+
+<style>
+* {
+    pointer-events: auto !important;
+}
+</style>
 @endsection

@@ -11,8 +11,6 @@
 
     @include('layouts.navigation')
 
-    </nav>
-
     <!-- PAGE CONTENT -->
     <div style="padding: 20px;">
         @yield('content')
