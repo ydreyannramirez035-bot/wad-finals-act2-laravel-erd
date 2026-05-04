@@ -10,32 +10,43 @@
     z-index: 10;
 ">
 
-    <!-- LEFT SIDE LINKS -->
-    <div style="display: flex; gap: 15px; align-items: center;">
+    <!-- LEFT SIDE -->
+    <div style="display: flex; gap: 20px; align-items: center;">
 
-        <a href="{{ route('dashboard') }}" style="color: white; text-decoration: none;">
-            Dashboard
-        </a>
+        {{-- USER DASHBOARD (ONLY NON-ADMINS) --}}
+        @cannot('isAdmin')
+            <a href="{{ route('dashboard') }}"
+                style="color: {{ request()->routeIs('dashboard') ? '#38bdf8' : 'white' }}; text-decoration: none;">
+                Dashboard
+            </a>
+        @endcannot
 
-        <a href="/orders" style="color: white; text-decoration: none;">
+        {{-- ADMIN DASHBOARD (ONLY ADMINS) --}}
+        @can('isAdmin')
+            <a href="{{ route('admin.dashboard') }}"
+                style="color: {{ request()->routeIs('admin.dashboard') ? '#38bdf8' : 'white' }}; text-decoration: none;">
+                Admin Dashboard
+            </a>
+
+            <a href="{{ route('products.index') }}"
+                style="color: {{ request()->routeIs('products.*') ? '#38bdf8' : 'white' }}; text-decoration: none;">
+                Products
+            </a>
+        @endcan
+
+        <a href="{{ route('orders.index') }}"
+            style="color: {{ request()->routeIs('orders.index') ? '#38bdf8' : 'white' }}; text-decoration: none;">
             Orders
         </a>
 
-        <a href="/orders/create" style="color: white; text-decoration: none;">
-            Create Order
+        <a href="{{ route('orders.create') }}"
+            style="color: {{ request()->routeIs('orders.create') ? '#38bdf8' : 'white' }}; text-decoration: none;">
+            New Order
         </a>
-
-        @auth
-            @if(auth()->user()->role === 'admin')
-                <a href="/products" style="color: white; text-decoration: none;">
-                    Products
-                </a>
-            @endif
-        @endauth
 
     </div>
 
-    <!-- RIGHT SIDE (USER SECTION) -->
+    <!-- RIGHT SIDE -->
     <div style="display: flex; gap: 15px; align-items: center;">
 
         @auth
@@ -47,7 +58,6 @@
                 Profile
             </a>
 
-            <!-- Logout -->
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
                 <button type="submit" style="
@@ -62,16 +72,6 @@
                 </button>
             </form>
         @endauth
-
-        @guest
-            <a href="{{ route('login') }}" style="color: white; text-decoration: none;">
-                Login
-            </a>
-
-            <a href="{{ route('register') }}" style="color: white; text-decoration: none;">
-                Register
-            </a>
-        @endguest
 
     </div>
 

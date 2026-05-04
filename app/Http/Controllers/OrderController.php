@@ -17,16 +17,24 @@ class OrderController extends Controller
 
     public function index()
     {
-        $customer = Auth::user()?->customer;
+        $user = Auth::user();
 
-        if (!$customer) {
-            abort(403, 'No customer profile linked to this user.');
+        if ($user->role === 'admin') {
+            $orders = Order::with(['customer', 'products'])
+                ->latest()
+                ->get();
+        } else {
+            $customer = $user->customer;
+
+            if (!$customer) {
+                abort(403, 'No customer profile linked to this user.');
+            }
+
+            $orders = Order::with(['customer', 'products'])
+                ->where('customer_id', $customer->id)
+                ->latest()
+                ->get();
         }
-
-        $orders = Order::with(['customer', 'products'])
-            ->where('customer_id', $customer->id)
-            ->latest()
-            ->get();
 
         return view('orders.index', compact('orders'));
     }
@@ -40,6 +48,7 @@ class OrderController extends Controller
         }
 
         $products = Product::all();
+
         return view('orders.create', compact('products'));
     }
 
@@ -51,7 +60,7 @@ class OrderController extends Controller
             abort(403, 'Create customer profile first.');
         }
 
-        $request->validate([
+        $validated = $request->validate([
             'product_ids' => 'required|array|min:1',
             'product_ids.*' => 'exists:products,id',
             'quantities' => 'required|array',
@@ -65,10 +74,9 @@ class OrderController extends Controller
 
         $total = 0;
 
-        foreach ($request->product_ids as $productId) {
+        foreach ($validated['product_ids'] as $productId) {
             $product = Product::findOrFail($productId);
-
-            $qty = $request->quantities[$productId] ?? 1;
+            $qty = $validated['quantities'][$productId] ?? 1;
 
             $order->products()->attach($productId, [
                 'quantity' => $qty,
@@ -84,12 +92,6 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $customer = Auth::user()?->customer;
-
-        if (!$customer || $order->customer_id !== $customer->id) {
-            abort(403);
-        }
-
         $order->load(['customer', 'products']);
 
         return view('orders.show', compact('order'));
@@ -97,12 +99,6 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
-        $customer = Auth::user()?->customer;
-
-        if (!$customer || $order->customer_id !== $customer->id) {
-            abort(403);
-        }
-
         $products = Product::all();
 
         return view('orders.edit', compact('order', 'products'));
@@ -110,32 +106,35 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $order)
     {
-        $customer = Auth::user()?->customer;
-
-        if (!$customer || $order->customer_id !== $customer->id) {
-            abort(403);
-        }
-
-        $request->validate([
-            'product_ids' => 'required|array',
+        $validated = $request->validate([
+            'product_ids' => 'required|array|min:1',
+            'product_ids.*' => 'exists:products,id',
+            'quantities' => 'required|array',
         ]);
 
-        $order->products()->sync($request->product_ids);
+        // Remove old products
+        $order->products()->detach();
 
-        $newTotal = $order->products->sum('price');
-        $order->update(['total_amount' => $newTotal]);
+        $total = 0;
+
+        foreach ($validated['product_ids'] as $productId) {
+            $product = Product::findOrFail($productId);
+            $qty = $validated['quantities'][$productId] ?? 1;
+
+            $order->products()->attach($productId, [
+                'quantity' => $qty,
+            ]);
+
+            $total += ($product->price * $qty);
+        }
+
+        $order->update(['total_amount' => $total]);
 
         return redirect()->route('orders.index')->with('success', 'Order updated.');
     }
 
     public function destroy(Order $order)
     {
-        $customer = Auth::user()?->customer;
-
-        if (!$customer || $order->customer_id !== $customer->id) {
-            abort(403);
-        }
-
         $order->delete();
 
         return redirect()->route('orders.index')->with('success', 'Order deleted.');

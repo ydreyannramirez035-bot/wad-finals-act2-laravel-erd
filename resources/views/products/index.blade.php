@@ -18,18 +18,6 @@
         </a>
     </div>
 
-    @if(session('success'))
-        <div style="
-            background: #e6ffed;
-            color: #1a7f37;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-        ">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div style="display: flex; flex-direction: column; gap: 12px;">
 
         @foreach($products as $product)

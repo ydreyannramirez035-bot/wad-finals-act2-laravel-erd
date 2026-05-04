@@ -39,12 +39,16 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        $this->authorize('view', $product);
+
         return view('products.show', compact('product'));
     }
 
     public function edit($id)
     {
         $product = Product::findOrFail($id);
+
+        $this->authorize('update', $product);
 
         return view('products.edit', compact('product'));
     }
@@ -72,7 +76,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         
         $this->authorize('delete', $product);
-        
+
         $product->delete();
 
         return redirect()->route('products.index')

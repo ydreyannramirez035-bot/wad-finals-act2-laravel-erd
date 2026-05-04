@@ -13,6 +13,33 @@
 
     <!-- PAGE CONTENT -->
     <div style="padding: 20px;">
+        @if(session('success'))
+        <div style="
+            background: #22c55e;
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        ">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div style="
+            background: #ef4444;
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        ">
+            <ul style="margin: 0;">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
         @yield('content')
     </div>
 

@@ -1,29 +1,66 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+@section('content')
+<div style="max-width: 600px; margin: auto;">
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+    <h2 style="margin-bottom: 20px;">My Profile</h2>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+    {{-- SUCCESS MESSAGE --}}
+    @if(session('success'))
+        <div style="
+            background: #e6ffed;
+            color: #1a7f37;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        ">
+            {{ session('success') }}
         </div>
-    </div>
-</x-app-layout>
+    @endif
+
+    <form method="POST" action="{{ route('profile.update') }}">
+        @csrf
+        @method('PATCH')
+
+        {{-- NAME --}}
+        <div style="margin-bottom: 15px;">
+            <label>Name</label><br>
+            <input type="text"
+                   name="name"
+                   value="{{ old('name', $user->name) }}"
+                   style="width: 100%; padding: 10px;">
+        </div>
+
+        {{-- EMAIL --}}
+        <div style="margin-bottom: 15px;">
+            <label>Email</label><br>
+            <input type="email"
+                   name="email"
+                   value="{{ old('email', $user->email) }}"
+                   style="width: 100%; padding: 10px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label>Role</label><br>
+            <input type="text"
+                value="{{ $user->role }}"
+                disabled
+                style="width: 100%; padding: 10px; background: #f3f4f6;">
+        </div>
+
+        <button type="submit"
+                style="
+                    background: #2563eb;
+                    color: white;
+                    padding: 10px 15px;
+                    border: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                ">
+            Update Profile
+        </button>
+
+    </form>
+
+</div>
+@endsection

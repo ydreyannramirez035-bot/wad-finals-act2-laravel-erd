@@ -18,22 +18,8 @@
         </a>
     </div>
 
-    @if(session('success'))
-        <div style="
-            background: #e6ffed;
-            color: #1a7f37;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-        ">
-            {{ session('success') }}
-        </div>
-    @endif
-
     @if($orders->isEmpty())
-        <div style="padding: 20px; border: 1px dashed #ccc; border-radius: 10px; text-align: center;">
-            No orders found.
-        </div>
+        <p>No orders yet. Create one first.</p>
     @else
 
         <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -49,7 +35,7 @@
                     background: #fff;
                 ">
 
-                    <!-- Order Info -->
+                    <!-- ORDER INFO -->
                     <div>
                         <div style="font-weight: bold;">
                             Order #{{ $order->id }}
@@ -68,7 +54,7 @@
                         </div>
                     </div>
 
-                    <!-- Actions -->
+                    <!-- ACTIONS -->
                     <div style="display: flex; gap: 10px; align-items: center;">
 
                         <a href="{{ route('orders.show', $order->id) }}"
@@ -76,11 +62,12 @@
                             View
                         </a>
 
-                        @if(auth()->user()->id === $order->customer->user_id)
-
+                        {{-- DELETE BUTTON (POLICY-BASED) --}}
+                        @can('delete', $order)
                             <form method="POST"
                                   action="{{ route('orders.destroy', $order->id) }}"
                                   onsubmit="return confirm('Delete this order?')">
+
                                 @csrf
                                 @method('DELETE')
 
@@ -95,9 +82,9 @@
                                         ">
                                     Delete
                                 </button>
-                            </form>
 
-                        @endif
+                            </form>
+                        @endcan
 
                     </div>
 
