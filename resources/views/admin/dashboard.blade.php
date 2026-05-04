@@ -1,54 +1,85 @@
 @extends('layouts.app')
 
+@section('title', 'Admin Dashboard')
+
 @section('content')
-<div style="max-width: 1000px; margin: auto;">
 
-    <h2 style="margin-bottom: 20px;">Admin Dashboard</h2>
+<div class="max-w-6xl mx-auto">
 
-    {{-- STATS CARDS --}}
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+        <p class="text-gray-500 text-sm">Overview of system performance</p>
+    </div>
 
-        <div style="padding: 15px; background: #f3f4f6; border-radius: 10px;">
-            <h3>Total Orders</h3>
-            <p style="font-size: 22px; font-weight: bold;">{{ $totalOrders }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <p class="text-gray-500 text-sm">Total Orders</p>
+            <h2 class="text-3xl font-bold text-blue-600 mt-2">{{ $totalOrders }}</h2>
+            <p class="text-xs text-gray-400 mt-1">All system orders</p>
         </div>
 
-        <div style="padding: 15px; background: #f3f4f6; border-radius: 10px;">
-            <h3>Total Revenue</h3>
-            <p style="font-size: 22px; font-weight: bold;">
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <p class="text-gray-500 text-sm">Total Revenue</p>
+            <h2 class="text-3xl font-bold text-green-600 mt-2">
                 ₱{{ number_format($totalRevenue, 2) }}
-            </p>
+            </h2>
+            <p class="text-xs text-gray-400 mt-1">Gross income</p>
         </div>
 
-        <div style="padding: 15px; background: #f3f4f6; border-radius: 10px;">
-            <h3>Total Customers</h3>
-            <p style="font-size: 22px; font-weight: bold;">{{ $totalCustomers }}</p>
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <p class="text-gray-500 text-sm">Total Customers</p>
+            <h2 class="text-3xl font-bold text-purple-600 mt-2">
+                {{ $totalCustomers }}
+            </h2>
+            <p class="text-xs text-gray-400 mt-1">Registered users</p>
         </div>
 
     </div>
 
-    {{-- RECENT ORDERS --}}
-    <h3>Recent Orders</h3>
+    <div class="bg-white rounded-2xl shadow overflow-hidden">
 
-    <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
+        <div class="p-5 border-b">
+            <h3 class="font-semibold text-gray-700">Recent Orders</h3>
+            <p class="text-sm text-gray-400">Latest transactions in the system</p>
+        </div>
 
-        @foreach($recentOrders as $order)
-            <div style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+        <div class="divide-y">
 
-                <strong>Order #{{ $order->id }}</strong><br>
+            @foreach($recentOrders as $order)
+            <div class="p-5 flex justify-between items-center hover:bg-gray-50 transition">
 
-                <small>{{ $order->customer->name }}</small><br>
+                <div>
+                    <p class="font-semibold text-gray-800">
+                        Order #{{ $order->id }}
+                    </p>
 
-                <small>{{ $order->order_date }}</small><br>
+                    <p class="text-sm text-gray-500">
+                        {{ $order->customer->name }}
+                    </p>
 
-                <strong style="color: green;">
-                    ₱{{ number_format($order->total_amount, 2) }}
-                </strong>
+                    <p class="text-xs text-gray-400">
+                        {{ $order->order_date }}
+                    </p>
+                </div>
+
+                <div class="text-right">
+                    <p class="text-green-600 font-bold">
+                        ₱{{ number_format($order->total_amount, 2) }}
+                    </p>
+
+                    <span class="text-xs px-3 py-1 rounded-full bg-green-100 text-green-600">
+                        Paid
+                    </span>
+                </div>
 
             </div>
-        @endforeach
+            @endforeach
+
+        </div>
 
     </div>
 
 </div>
+
 @endsection
