@@ -63,11 +63,16 @@ The system uses authentication, role-based access control, middleware protection
 ---
 
 ### Eloquent Relationships
+- Customer has one Profile
+- Customer has many Orders
+- Customer belongs to User
 - Order belongs to Customer
 - Order belongs to many Products (with quantity)
 - Displays:
   - Customer name in orders
   - Products inside each order
+- Profile belongs to Customer
+- User has one Customer
 
 ---
 
