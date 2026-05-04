@@ -65,10 +65,13 @@ The system uses authentication, role-based access control, middleware protection
 ### Eloquent Relationships
 
 - User has one Customer  
-- Customer belongs to User  
+- Customer belongs to User
+
 - Customer has many Orders  
-- Order belongs to Customer  
-- Order belongs to many Products (with quantity via pivot table)  
+- Order belongs to Customer
+
+- Order belongs to many Products (with quantity via pivot table)
+  
 - These relationships allow the system to:
     - Display customer-specific orders
     - Attach multiple products to a single order
