@@ -1,66 +1,70 @@
 @extends('layouts.app')
 
+@section('title', 'My Profile')
+
 @section('content')
-<div style="max-width: 600px; margin: auto;">
 
-    <h2 style="margin-bottom: 20px;">My Profile</h2>
+<div class="max-w-2xl mx-auto">
 
-    {{-- SUCCESS MESSAGE --}}
+    <!-- HEADER -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">My Profile</h1>
+        <p class="text-gray-500 text-sm">Manage your account information</p>
+    </div>
+
+    <!-- SUCCESS MESSAGE -->
     @if(session('success'))
-        <div style="
-            background: #e6ffed;
-            color: #1a7f37;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-        ">
+        <div class="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-5">
             {{ session('success') }}
         </div>
     @endif
 
-    <form method="POST" action="{{ route('profile.update') }}">
-        @csrf
-        @method('PATCH')
+    <!-- PROFILE CARD -->
+    <div class="bg-white shadow rounded-2xl p-6">
 
-        {{-- NAME --}}
-        <div style="margin-bottom: 15px;">
-            <label>Name</label><br>
-            <input type="text"
-                   name="name"
-                   value="{{ old('name', $user->name) }}"
-                   style="width: 100%; padding: 10px;">
-        </div>
+        <form method="POST" action="{{ route('profile.update') }}">
+            @csrf
+            @method('PATCH')
 
-        {{-- EMAIL --}}
-        <div style="margin-bottom: 15px;">
-            <label>Email</label><br>
-            <input type="email"
-                   name="email"
-                   value="{{ old('email', $user->email) }}"
-                   style="width: 100%; padding: 10px;">
-        </div>
+            <!-- NAME -->
+            <div class="mb-4">
+                <label class="text-gray-600 text-sm">Name</label>
+                <input type="text"
+                       name="name"
+                       value="{{ old('name', $user->name) }}"
+                       class="mt-1 w-full bg-white border border-gray-300 rounded-lg p-2
+                              focus:border-blue-500 focus:ring-blue-500 text-gray-900">
+            </div>
 
-        <div style="margin-bottom: 15px;">
-            <label>Role</label><br>
-            <input type="text"
-                value="{{ $user->role }}"
-                disabled
-                style="width: 100%; padding: 10px; background: #f3f4f6;">
-        </div>
+            <!-- EMAIL -->
+            <div class="mb-4">
+                <label class="text-gray-600 text-sm">Email</label>
+                <input type="email"
+                       name="email"
+                       value="{{ old('email', $user->email) }}"
+                       class="mt-1 w-full bg-white border border-gray-300 rounded-lg p-2
+                              focus:border-blue-500 focus:ring-blue-500 text-gray-900">
+            </div>
 
-        <button type="submit"
-                style="
-                    background: #2563eb;
-                    color: white;
-                    padding: 10px 15px;
-                    border: none;
-                    border-radius: 6px;
-                    cursor: pointer;
-                ">
-            Update Profile
-        </button>
+            <!-- ROLE (READ ONLY) -->
+            <div class="mb-6">
+                <label class="text-gray-600 text-sm">Role</label>
+                <input type="text"
+                       value="{{ $user->role }}"
+                       disabled
+                       class="mt-1 w-full bg-gray-100 border border-gray-200 rounded-lg p-2 text-gray-600">
+            </div>
 
-    </form>
+            <!-- BUTTON -->
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                Update Profile
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
+
 @endsection

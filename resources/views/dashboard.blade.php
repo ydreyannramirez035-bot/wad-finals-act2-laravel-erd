@@ -1,64 +1,75 @@
 @extends('layouts.app')
 
+@section('title', 'Dashboard')
+
 @section('content')
-<div style="max-width: 900px; margin: auto;">
 
-    <h2 style="margin-bottom: 20px;">My Dashboard</h2>
+<!-- HEADER -->
+<div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Welcome back 👋</h1>
+    <p class="text-gray-500 text-sm">Here’s what’s happening in your system today.</p>
+</div>
 
-    {{-- STATS --}}
-    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px;">
+<!-- STATS CARDS -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        <div style="padding: 15px; background: #f3f4f6; border-radius: 10px;">
-            <h3>Total Orders</h3>
-            <p style="font-size: 22px; font-weight: bold;">{{ $totalOrders }}</p>
-        </div>
-
-        <div style="padding: 15px; background: #f3f4f6; border-radius: 10px;">
-            <h3>Total Spent</h3>
-            <p style="font-size: 22px; font-weight: bold;">
-                ₱{{ number_format($totalSpent, 2) }}
-            </p>
-        </div>
-
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+        <p class="text-gray-500 text-sm">Total Orders</p>
+        <h2 class="text-3xl font-bold text-blue-600 mt-2">{{ $totalOrders }}</h2>
+        <p class="text-xs text-gray-400 mt-1">All time orders</p>
     </div>
 
-    {{-- QUICK ACTIONS --}}
-    <div style="margin-bottom: 25px;">
-        <a href="{{ route('orders.create') }}"
-           style="background: green; color: white; padding: 10px 15px; border-radius: 6px; text-decoration: none;">
-            + Create Order
-        </a>
-
-        <a href="{{ route('orders.index') }}"
-           style="background: #2563eb; color: white; padding: 10px 15px; border-radius: 6px; text-decoration: none; margin-left: 10px;">
-            View Orders
-        </a>
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+        <p class="text-gray-500 text-sm">Total Spent</p>
+        <h2 class="text-3xl font-bold text-green-600 mt-2">₱{{ $totalSpent }}</h2>
+        <p class="text-xs text-gray-400 mt-1">Customer spending</p>
     </div>
 
-    {{-- RECENT ORDERS --}}
-    <h3>Recent Orders</h3>
-
-    @if($recentOrders->isEmpty())
-        <p>No orders yet.</p>
-    @else
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-
-            @foreach($recentOrders as $order)
-                <div style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-
-                    <strong>Order #{{ $order->id }}</strong><br>
-
-                    <small>{{ $order->order_date }}</small><br>
-
-                    <strong style="color: green;">
-                        ₱{{ number_format($order->total_amount, 2) }}
-                    </strong>
-
-                </div>
-            @endforeach
-
-        </div>
-    @endif
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+        <p class="text-gray-500 text-sm">Status</p>
+        <h2 class="text-3xl font-bold text-purple-600 mt-2">Active</h2>
+        <p class="text-xs text-gray-400 mt-1">System running normally</p>
+    </div>
 
 </div>
+
+<!-- RECENT ORDERS -->
+<div class="mt-8 bg-white rounded-2xl shadow overflow-hidden">
+
+    <div class="p-5 border-b">
+        <h3 class="font-semibold text-gray-700">Recent Orders</h3>
+        <p class="text-sm text-gray-400">Latest transactions in your system</p>
+    </div>
+
+    <table class="w-full text-left">
+        <thead class="bg-gray-50 text-gray-500 text-sm">
+            <tr>
+                <th class="py-3 px-5">Order ID</th>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach($recentOrders as $order)
+            <tr class="border-b hover:bg-gray-50 transition">
+                <td class="py-3 px-5 font-medium">#{{ $order->id }}</td>
+                <td>{{ $order->product->name }}</td>
+                <td class="text-green-600 font-semibold">₱{{ $order->total }}</td>
+
+                <td>
+                    <span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-600">
+                        Completed
+                    </span>
+                </td>
+            </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+
+</div>
+
 @endsection
