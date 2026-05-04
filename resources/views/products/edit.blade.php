@@ -1,104 +1,73 @@
 @extends('layouts.app')
 
+@section('title', 'Edit Product')
+
 @section('content')
-<div style="max-width: 600px; margin: auto;">
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="margin: 0;">Edit Product</h2>
+<div class="max-w-2xl mx-auto">
 
-        <!-- Back Button -->
+    <div class="flex justify-between items-center mb-6">
+
+        <h1 class="text-2xl font-bold text-gray-800">Edit Product</h1>
+
         <a href="{{ route('products.index') }}"
-           style="
-                text-decoration: none;
-                background: #6b7280;
-                color: white;
-                padding: 8px 12px;
-                border-radius: 6px;
-                font-size: 14px;
-           ">
+           class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition">
             ← Back
         </a>
+
     </div>
 
     <form method="POST"
           action="{{ route('products.update', $product->id) }}"
-          style="
-              display: flex;
-              flex-direction: column;
-              gap: 12px;
-              padding: 20px;
-              border: 1px solid #ddd;
-              border-radius: 10px;
-              background: #fff;
-          ">
+          class="bg-white p-6 rounded-2xl shadow space-y-4">
+
         @csrf
         @method('PUT')
 
-        <!-- Product Name -->
         <div>
-            <label style="font-weight: bold;">Product Name</label>
+            <label class="block text-sm font-medium text-gray-700">
+                Product Name
+            </label>
+
             <input type="text"
                    name="product_name"
                    value="{{ $product->product_name }}"
                    required
-                   style="
-                        width: 100%;
-                        padding: 10px;
-                        margin-top: 5px;
-                        border: 1px solid #ccc;
-                        border-radius: 6px;
-                   ">
+                   class="mt-1 w-full p-2 border rounded-lg focus:ring focus:ring-blue-200">
         </div>
 
-        <!-- Stock -->
         <div>
-            <label style="font-weight: bold;">Stock Quantity</label>
+            <label class="block text-sm font-medium text-gray-700">
+                Stock Quantity
+            </label>
+
             <input type="number"
                    name="stock_quantity"
                    value="{{ $product->stock_quantity }}"
                    required
-                   style="
-                        width: 100%;
-                        padding: 10px;
-                        margin-top: 5px;
-                        border: 1px solid #ccc;
-                        border-radius: 6px;
-                   ">
+                   class="mt-1 w-full p-2 border rounded-lg focus:ring focus:ring-blue-200">
         </div>
 
-        <!-- Price -->
         <div>
-            <label style="font-weight: bold;">Price</label>
+            <label class="block text-sm font-medium text-gray-700">
+                Price
+            </label>
+
             <input type="number"
                    step="0.01"
                    name="price"
                    value="{{ $product->price }}"
                    required
-                   style="
-                        width: 100%;
-                        padding: 10px;
-                        margin-top: 5px;
-                        border: 1px solid #ccc;
-                        border-radius: 6px;
-                   ">
+                   class="mt-1 w-full p-2 border rounded-lg focus:ring focus:ring-blue-200">
         </div>
 
-        <!-- Submit -->
         <button type="submit"
-                style="
-                    margin-top: 10px;
-                    padding: 12px;
-                    background: orange;
-                    color: white;
-                    border: none;
-                    border-radius: 6px;
-                    font-size: 16px;
-                    cursor: pointer;
-                ">
+                class="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition">
             Save Changes
         </button>
 
     </form>
 
 </div>
+
 @endsection

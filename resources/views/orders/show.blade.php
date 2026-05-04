@@ -1,98 +1,75 @@
 @extends('layouts.app')
 
-@section('content')
-<div style="max-width: 700px; margin: auto;">
+@section('title', 'Order Details')
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="margin: 0;">Order Details</h2>
+@section('content')
+
+<div class="max-w-4xl mx-auto">
+
+    <div class="flex justify-between items-center mb-6">
+
+        <h1 class="text-2xl font-bold text-gray-800">Order Details</h1>
 
         <a href="{{ route('orders.index') }}"
-           style="
-                text-decoration: none;
-                background: #6b7280;
-                color: white;
-                padding: 8px 12px;
-                border-radius: 6px;
-                font-size: 14px;
-           ">
+           class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition">
             ← Back
         </a>
+
     </div>
 
-    <!-- Order Info Card -->
-    <div style="
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 20px;
-        background: #fff;
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    ">
+    <div class="bg-white p-6 rounded-2xl shadow mb-6 space-y-3">
 
         <div>
-            <div style="font-size: 13px; color: gray;">Customer</div>
-            <div style="font-weight: bold;">
+            <p class="text-sm text-gray-500">Customer</p>
+            <p class="font-semibold text-gray-800">
                 {{ $order->customer->name }}
-            </div>
+            </p>
         </div>
 
         <div>
-            <div style="font-size: 13px; color: gray;">Order Date</div>
-            <div>
+            <p class="text-sm text-gray-500">Order Date</p>
+            <p class="text-gray-700">
                 {{ $order->order_date }}
-            </div>
+            </p>
         </div>
 
         <div>
-            <div style="font-size: 13px; color: gray;">Total Amount</div>
-            <div style="font-size: 18px; font-weight: bold; color: green;">
+            <p class="text-sm text-gray-500">Total Amount</p>
+            <p class="text-xl font-bold text-green-600">
                 ₱{{ number_format($order->total_amount, 2) }}
-            </div>
+            </p>
         </div>
 
     </div>
 
-    <!-- Products Section -->
-    <h3 style="margin-bottom: 10px;">Products</h3>
+    <h2 class="text-lg font-semibold mb-3 text-gray-800">Products</h2>
 
-    <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div class="space-y-3">
 
         @foreach($order->products as $product)
-            <div style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 12px;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                background: #fff;
-            ">
 
-                <div>
-                    <div style="font-weight: bold;">
-                        {{ $product->product_name }}
-                    </div>
+        <div class="bg-white p-4 rounded-2xl shadow flex justify-between items-center">
 
-                    <div style="font-size: 13px; color: gray;">
-                        ₱{{ number_format($product->price, 2) }}
-                    </div>
-                </div>
+            <div>
+                <p class="font-semibold text-gray-800">
+                    {{ $product->product_name }}
+                </p>
 
-                <div style="
-                    background: #f3f4f6;
-                    padding: 5px 10px;
-                    border-radius: 6px;
-                    font-size: 13px;
-                ">
-                    Qty: {{ $product->pivot->quantity }}
-                </div>
-
+                <p class="text-sm text-gray-500">
+                    ₱{{ number_format($product->price, 2) }}
+                </p>
             </div>
+
+            <div class="bg-gray-100 px-3 py-1 rounded-lg text-sm text-gray-700">
+                Qty: {{ $product->pivot->quantity }}
+            </div>
+
+        </div>
+
         @endforeach
 
     </div>
 
 </div>
+
 @endsection

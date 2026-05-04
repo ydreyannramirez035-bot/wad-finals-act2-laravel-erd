@@ -1,94 +1,83 @@
 @extends('layouts.app')
 
-@section('content')
-<div style="max-width: 900px; margin: auto;">
+@section('title', 'Orders List')
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="margin: 0;">Orders List</h2>
+@section('content')
+
+<div class="max-w-5xl mx-auto">
+
+    <div class="flex justify-between items-center mb-6">
+
+        <h1 class="text-2xl font-bold text-gray-800">Orders List</h1>
 
         <a href="{{ route('orders.create') }}"
-           style="
-                background: green;
-                color: white;
-                padding: 10px 15px;
-                border-radius: 6px;
-                text-decoration: none;
-           ">
+           class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
             + Create Order
         </a>
+
     </div>
 
     @if($orders->isEmpty())
-        <p>No orders yet. Create one first.</p>
+
+        <div class="bg-white p-6 rounded-2xl shadow text-center text-gray-500">
+            No orders yet. Create your first order.
+        </div>
+
     @else
 
-        <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="space-y-4">
 
             @foreach($orders as $order)
-                <div style="
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 15px;
-                    border: 1px solid #ddd;
-                    border-radius: 10px;
-                    background: #fff;
-                ">
 
-                    <!-- ORDER INFO -->
-                    <div>
-                        <div style="font-weight: bold;">
-                            Order #{{ $order->id }}
-                        </div>
+            <div class="bg-white p-5 rounded-2xl shadow flex justify-between items-center">
 
-                        <div style="font-size: 13px; color: gray;">
-                            {{ $order->customer->name }}
-                        </div>
+                <div>
 
-                        <div style="font-size: 13px; color: gray;">
-                            {{ $order->order_date }}
-                        </div>
+                    <p class="font-semibold text-gray-800">
+                        Order #{{ $order->id }}
+                    </p>
 
-                        <div style="margin-top: 5px; font-weight: bold; color: green;">
-                            ₱{{ number_format($order->total_amount, 2) }}
-                        </div>
-                    </div>
+                    <p class="text-sm text-gray-500">
+                        {{ $order->customer->name }}
+                    </p>
 
-                    <!-- ACTIONS -->
-                    <div style="display: flex; gap: 10px; align-items: center;">
+                    <p class="text-xs text-gray-400">
+                        {{ $order->order_date }}
+                    </p>
 
-                        <a href="{{ route('orders.show', $order->id) }}"
-                           style="color: #2563eb; text-decoration: none;">
-                            View
-                        </a>
-
-                        {{-- DELETE BUTTON (POLICY-BASED) --}}
-                        @can('delete', $order)
-                            <form method="POST"
-                                  action="{{ route('orders.destroy', $order->id) }}"
-                                  onsubmit="return confirm('Delete this order?')">
-
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit"
-                                        style="
-                                            background: red;
-                                            color: white;
-                                            border: none;
-                                            padding: 6px 10px;
-                                            border-radius: 6px;
-                                            cursor: pointer;
-                                        ">
-                                    Delete
-                                </button>
-
-                            </form>
-                        @endcan
-
-                    </div>
+                    <p class="mt-1 font-bold text-green-600">
+                        ₱{{ number_format($order->total_amount, 2) }}
+                    </p>
 
                 </div>
+
+                <div class="flex items-center gap-4">
+
+                    <a href="{{ route('orders.show', $order->id) }}"
+                       class="text-blue-600 hover:underline">
+                        View
+                    </a>
+
+                    @can('delete', $order)
+                    <form method="POST"
+                          action="{{ route('orders.destroy', $order->id) }}"
+                          onsubmit="return confirm('Delete this order?')">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit"
+                                class="text-red-600 hover:underline">
+                            Delete
+                        </button>
+
+                    </form>
+                    @endcan
+
+                </div>
+
+            </div>
+
             @endforeach
 
         </div>
@@ -96,4 +85,5 @@
     @endif
 
 </div>
+
 @endsection

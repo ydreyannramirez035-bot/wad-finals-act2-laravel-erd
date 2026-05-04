@@ -1,53 +1,51 @@
 @extends('layouts.app')
 
-@section('content')
-<div style="max-width: 600px; margin: auto;">
+@section('title', 'Create Customer Profile')
 
-    <h2 style="margin-bottom: 20px;">Create Customer Profile</h2>
+@section('content')
+
+<div class="max-w-xl mx-auto">
+
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">
+        Create Customer Profile
+    </h1>
 
     @if(session('success'))
-        <p style="color: green; margin-bottom: 10px;">
+        <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
             {{ session('success') }}
-        </p>
+        </div>
     @endif
 
     <form method="POST" action="{{ route('customers.store') }}">
         @csrf
 
-        <div style="
-            background: white;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        ">
+        <div class="bg-white p-6 rounded-2xl shadow space-y-4">
 
-            <label style="font-weight: bold;">Full Name</label>
-            <input type="text"
-                   name="name"
-                   required
-                   placeholder="Enter your name"
-                   style="width: 100%; padding: 10px; margin-top: 8px; border-radius: 6px; border: 1px solid #ccc;">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">
+                    Full Name
+                </label>
+
+                <input type="text"
+                       name="name"
+                       required
+                       placeholder="Enter your name"
+                       class="mt-1 w-full p-2 border rounded-lg focus:ring focus:ring-blue-200">
+            </div>
 
             <button type="submit"
-                    style="
-                        margin-top: 15px;
-                        width: 100%;
-                        padding: 10px;
-                        background: green;
-                        color: white;
-                        border: none;
-                        border-radius: 6px;
-                    ">
+                    class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
                 Save Profile
             </button>
 
         </div>
     </form>
 
-    <a href="{{ url('/dashboard') }}"
-       style="display: inline-block; margin-top: 15px; color: gray;">
+    <a href="/dashboard"
+       class="inline-block mt-4 text-gray-500 hover:text-gray-700">
         ← Back
     </a>
 
 </div>
+
 @endsection

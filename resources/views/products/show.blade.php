@@ -1,58 +1,48 @@
 @extends('layouts.app')
 
+@section('title', 'Product Details')
+
 @section('content')
-<div style="max-width: 600px; margin: auto;">
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="margin: 0;">Product Details</h2>
+<div class="max-w-2xl mx-auto">
 
-        <!-- Back Button -->
+    <div class="flex justify-between items-center mb-6">
+
+        <h1 class="text-2xl font-bold text-gray-800">Product Details</h1>
+
         <a href="{{ route('products.index') }}"
-           style="
-                text-decoration: none;
-                background: #6b7280;
-                color: white;
-                padding: 8px 12px;
-                border-radius: 6px;
-                font-size: 14px;
-           ">
+           class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition">
             ← Back
         </a>
+
     </div>
 
-    <!-- Product Card -->
-    <div style="
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 20px;
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    ">
+    <div class="bg-white p-6 rounded-2xl shadow space-y-4">
 
+        <!-- NAME -->
         <div>
-            <div style="font-size: 14px; color: gray;">Product Name</div>
-            <div style="font-size: 18px; font-weight: bold;">
+            <p class="text-sm text-gray-500">Product Name</p>
+            <p class="text-xl font-semibold text-gray-800">
                 {{ $product->product_name }}
-            </div>
+            </p>
         </div>
 
         <div>
-            <div style="font-size: 14px; color: gray;">Stock</div>
-            <div style="font-size: 16px;">
+            <p class="text-sm text-gray-500">Stock</p>
+            <p class="text-gray-800 text-lg">
                 {{ $product->stock_quantity }}
-            </div>
+            </p>
         </div>
 
         <div>
-            <div style="font-size: 14px; color: gray;">Price</div>
-            <div style="font-size: 16px; font-weight: bold; color: green;">
+            <p class="text-sm text-gray-500">Price</p>
+            <p class="text-xl font-bold text-green-600">
                 ₱{{ number_format($product->price, 2) }}
-            </div>
+            </p>
         </div>
 
     </div>
 
 </div>
+
 @endsection

@@ -1,46 +1,43 @@
 @extends('layouts.app')
 
+@section('title', 'My Profile')
+
 @section('content')
-<div style="max-width: 600px; margin: auto;">
 
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h2>My Profile</h2>
+<div class="max-w-2xl mx-auto">
 
-        <a href="{{ route('customers.edit', Auth::user()->customer->id ?? 1) }}"
-           style="
-                background: #3b82f6;
-                color: white;
-                padding: 8px 12px;
-                border-radius: 6px;
-                text-decoration: none;
-                font-size: 14px;
-           ">
-            Edit
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">My Profile</h1>
+
+        @if(Auth::user()->customer)
+            <a href="{{ route('customers.edit', Auth::user()->customer->id) }}"
+               class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                Edit
+            </a>
+        @endif
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow">
+
+        <p class="text-sm text-gray-500">Customer Name</p>
+        <p class="text-lg font-semibold text-gray-800">
+            {{ $customer->name ?? 'No profile yet' }}
+        </p>
+
+        <p class="text-sm text-gray-500 mt-4">Email</p>
+        <p class="text-gray-800">
+            {{ Auth::user()->email }}
+        </p>
+
+    </div>
+
+    <div class="mt-4">
+        <a href="/orders"
+           class="text-gray-500 hover:text-gray-700">
+            ← Back to Orders
         </a>
     </div>
 
-    <div style="
-        margin-top: 15px;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-    ">
-
-        <p style="color: gray; font-size: 13px;">Customer Name</p>
-        <p style="font-size: 18px; font-weight: bold;">
-            {{ $customer->name }}
-        </p>
-
-        <p style="color: gray; font-size: 13px; margin-top: 10px;">Email</p>
-        <p>{{ Auth::user()->email }}</p>
-
-    </div>
-
-    <a href="{{ url('/orders') }}"
-       style="display: inline-block; margin-top: 15px; color: gray;">
-        ← Back to Orders
-    </a>
-
 </div>
+
 @endsection

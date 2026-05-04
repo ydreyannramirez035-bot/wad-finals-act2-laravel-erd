@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <title>OrderTrack</title>
 
-    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
 <body class="bg-gray-50 font-sans">
 
-<!-- NAVBAR -->
 <header class="flex justify-between items-center px-10 py-5 bg-white shadow">
     <h1 class="text-xl font-bold text-blue-600">OrderTrack</h1>
 
@@ -23,7 +21,6 @@
     </div>
 </header>
 
-<!-- HERO -->
 <section class="text-center py-20 px-6">
     <h2 class="text-4xl font-bold text-gray-800">
         Smart Order Management Made Simple
@@ -42,7 +39,6 @@
     </div>
 </section>
 
-<!-- FEATURES -->
 <section class="grid grid-cols-1 md:grid-cols-3 gap-6 px-10 pb-20">
 
     <div class="bg-white p-6 rounded-2xl shadow text-center">
@@ -68,7 +64,6 @@
 
 </section>
 
-<!-- FOOTER -->
 <footer class="text-center py-6 text-gray-400 text-sm">
     © {{ date('Y') }} OrderTrack. All rights reserved.
 </footer>

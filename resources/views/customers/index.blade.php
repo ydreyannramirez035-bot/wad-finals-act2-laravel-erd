@@ -1,68 +1,52 @@
 @extends('layouts.app')
 
-@section('content')
-<div style="max-width: 600px; margin: auto;">
+@section('title', 'My Profile')
 
-    <h2 style="margin-bottom: 20px;">My Profile</h2>
+@section('content')
+
+<div class="max-w-2xl mx-auto">
+
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">My Profile</h1>
 
     @if(session('success'))
-        <p style="color: green; margin-bottom: 10px;">
+        <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
             {{ session('success') }}
-        </p>
+        </div>
     @endif
 
     @if($customer)
-        <div style="
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        ">
 
-            <p style="color: gray; font-size: 13px;">Name</p>
-            <p style="font-size: 18px; font-weight: bold;">
+        <div class="bg-white p-6 rounded-2xl shadow">
+
+            <p class="text-sm text-gray-500">Name</p>
+            <p class="text-xl font-semibold text-gray-800 mt-1">
                 {{ $customer->name }}
             </p>
 
         </div>
 
-        <div style="margin-top: 15px;">
+        <div class="mt-4">
             <a href="{{ route('customers.edit', $customer->id) }}"
-               style="
-                    background: #3b82f6;
-                    color: white;
-                    padding: 8px 12px;
-                    border-radius: 6px;
-                    text-decoration: none;
-                    font-size: 14px;
-               ">
+               class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                 Edit Profile
             </a>
         </div>
 
     @else
-        <div style="
-            padding: 15px;
-            border: 1px dashed #ccc;
-            border-radius: 10px;
-            text-align: center;
-        ">
-            <p>You don't have a profile yet.</p>
+
+        <div class="bg-white p-6 rounded-2xl shadow text-center border border-dashed">
+
+            <p class="text-gray-600">You don't have a profile yet.</p>
 
             <a href="{{ route('customers.create') }}"
-               style="
-                    display: inline-block;
-                    margin-top: 10px;
-                    background: green;
-                    color: white;
-                    padding: 10px 15px;
-                    border-radius: 6px;
-                    text-decoration: none;
-               ">
+               class="inline-block mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
                 Create Profile
             </a>
+
         </div>
+
     @endif
 
 </div>
+
 @endsection

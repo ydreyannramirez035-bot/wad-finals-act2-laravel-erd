@@ -4,13 +4,11 @@
 
 @section('content')
 
-<!-- HEADER -->
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Welcome back 👋</h1>
     <p class="text-gray-500 text-sm">Here’s what’s happening in your system today.</p>
 </div>
 
-<!-- STATS CARDS -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
     <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
@@ -33,7 +31,6 @@
 
 </div>
 
-<!-- RECENT ORDERS -->
 <div class="mt-8 bg-white rounded-2xl shadow overflow-hidden">
 
     <div class="p-5 border-b">
