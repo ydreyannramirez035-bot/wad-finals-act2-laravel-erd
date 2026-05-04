@@ -19,7 +19,9 @@
 
     <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
         <p class="text-gray-500 text-sm">Total Spent</p>
-        <h2 class="text-3xl font-bold text-green-600 mt-2">₱{{ $totalSpent }}</h2>
+        <h2 class="text-3xl font-bold text-green-600 mt-2">
+            ₱{{ number_format($totalSpent, 2) }}
+        </h2>
         <p class="text-xs text-gray-400 mt-1">Customer spending</p>
     </div>
 
@@ -42,7 +44,7 @@
         <thead class="bg-gray-50 text-gray-500 text-sm">
             <tr>
                 <th class="py-3 px-5">Order ID</th>
-                <th>Product</th>
+                <th>Products</th>
                 <th>Amount</th>
                 <th>Status</th>
             </tr>
@@ -50,19 +52,45 @@
 
         <tbody>
 
-            @foreach($recentOrders as $order)
+            @forelse($recentOrders as $order)
             <tr class="border-b hover:bg-gray-50 transition">
-                <td class="py-3 px-5 font-medium">#{{ $order->id }}</td>
-                <td>{{ $order->product->name }}</td>
-                <td class="text-green-600 font-semibold">₱{{ $order->total }}</td>
 
+                <!-- ORDER ID -->
+                <td class="py-3 px-5 font-medium">
+                    #{{ $order->id }}
+                </td>
+
+                <!-- PRODUCTS (FIXED: belongsToMany) -->
+                <td>
+                    @forelse($order->products as $product)
+                        {{ $product->name }} (x{{ $product->pivot->quantity }})<br>
+                    @empty
+                        <span class="text-gray-400">No Products</span>
+                    @endforelse
+                </td>
+
+                <!-- TOTAL -->
+                <td class="text-green-600 font-semibold">
+                    ₱{{ number_format($order->total_amount, 2) }}
+                </td>
+
+                <!-- STATUS -->
                 <td>
                     <span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-600">
                         Completed
                     </span>
                 </td>
+
             </tr>
-            @endforeach
+            @empty
+
+            <tr>
+                <td colspan="4" class="text-center py-5 text-gray-400">
+                    No recent orders found.
+                </td>
+            </tr>
+
+            @endforelse
 
         </tbody>
     </table>

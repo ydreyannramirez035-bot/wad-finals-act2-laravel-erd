@@ -12,13 +12,6 @@
         <p class="text-gray-500 text-sm">Manage your account information</p>
     </div>
 
-    <!-- SUCCESS MESSAGE -->
-    @if(session('success'))
-        <div class="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-5">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <!-- PROFILE CARD -->
     <div class="bg-white shadow rounded-2xl p-6">
 

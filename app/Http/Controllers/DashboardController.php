@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
         $totalSpent = $ordersQuery->sum('total_amount');
 
-        $recentOrders = $ordersQuery
+        $recentOrders = Order::with(['customer', 'products'])
             ->latest()
             ->take(5)
             ->get();

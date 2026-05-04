@@ -5,6 +5,18 @@
     <title>OrderTrack</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    </style>
 </head>
 
 <body class="bg-gray-100 font-sans">
@@ -75,6 +87,59 @@
 
     </div>
 </div>
+
+<div id="toast-container" style="
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+"></div>
+
+<script>
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+
+    let bgColor = '#22c55e'; // green default
+    if (type === 'error') bgColor = '#ef4444';
+    if (type === 'info') bgColor = '#3b82f6';
+
+    toast.innerText = message;
+
+    toast.style.cssText = `
+        background: ${bgColor};
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-family: Arial;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        min-width: 220px;
+        animation: slideIn 0.3s ease;
+    `;
+
+    document.getElementById('toast-container').appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = '0.5s';
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+</script>
+
+@if (session('success'))
+    <script>
+        showToast(@json(session('success')), 'success');
+    </script>
+@endif
+
+@if (session('error'))
+    <script>
+        showToast(@json(session('error')), 'error');
+    </script>
+@endif
 
 </body>
 </html>

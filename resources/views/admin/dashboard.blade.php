@@ -55,7 +55,7 @@
                     </p>
 
                     <p class="text-sm text-gray-500">
-                        {{ $order->customer->name }}
+                        {{ optional($order->customer)->name ?? 'No Customer' }}                    
                     </p>
 
                     <p class="text-xs text-gray-400">
