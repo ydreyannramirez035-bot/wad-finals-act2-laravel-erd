@@ -1,4 +1,5 @@
-## Web Application Development (WAD 2) Final Project.
+## Web Application Development (WAD 2) Final Project
+
 # OrderTrack – Order Management System
 
 ## Project Title
