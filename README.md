@@ -1,42 +1,119 @@
-# Laravel ERD (Activity 2): E-Commerce Database Implementation
+## Web Application Development (WAD 2) Final Project.
+# OrderTrack – Order Management System
 
-This repository contains a Laravel-based implementation of a relational database schema. The project demonstrates the use of Eloquent relationships, including One-to-One, One-to-Many, and Many-to-Many, using an associative entity (Pivot table).
-
-##  Entity Relationship Diagram (ERD)
-
-![Entity Relationship Diagram](erd.png) 
+## Project Title
+OrderTrack: A Laravel-Based Order Management System
 
 ---
 
-##  Database Logic & Relationships
+## System Description
+OrderTrack is a web-based Order Management System developed using the Laravel framework. It allows customers to create and manage their own orders, while administrators can monitor all transactions, manage products, and view overall system performance through a dedicated admin dashboard.
 
-### 1. One-to-One: Customer & Profile
-* **Logic:** Each Customer is linked to exactly one Profile.
-* **Implementation:** The `profiles` table contains a `customer_id` with a **Unique Constraint** to prevent duplicate profiles for a single user.
-* **Eloquent:** `Customer` hasOne `Profile` | `Profile` belongsTo `Customer`.
-
-### 2. One-to-Many: Customer & Order
-* **Logic:** A single Customer can place multiple Orders, but each Order belongs to only one Customer.
-* **Implementation:** The `orders` table holds the `customer_id` foreign key.
-* **Eloquent:** `Customer` hasMany `Order` | `Order` belongsTo `Customer`.
-
-### 3. Many-to-Many: Order & Product (Associative Entity)
-* **Logic:** An Order can contain multiple Products, and a Product can be part of multiple Orders.
-* **Associative Data:** To make the system functional for a real-world shop, I have added a **`quantity`** attribute to the pivot table (`order_product`). This allows the system to track how many units of a specific product were purchased in a single order.
-* **Eloquent:** Both models use `belongsToMany` with the `->withPivot('quantity')` method.
+The system uses authentication, role-based access control, middleware protection, and Eloquent ORM to ensure secure and efficient data management.
 
 ---
 
-## Key Files to Review
+## Implemented Features
 
-* **Migrations:** `database/migrations/`
-    * `create_customers_table.php`
-    * `create_profiles_table.php`
-    * `create_orders_table.php`
-    * `create_products_table.php`
-    * `create_order_product_table.php` (Pivot Table)
-* **Models:** `app/Models/`
-    * `Customer.php`
-    * `Profile.php`
-    * `Order.php`
-    * `Product.php`
+### Authentication System
+- User registration and login
+- Secure access using Laravel authentication
+- Session-based login system
+
+---
+
+### Role-Based Access
+- **Customer**
+  - View dashboard
+  - Create orders
+  - View and delete own orders
+  - Manage profile
+
+- **Admin**
+  - Access admin dashboard
+  - View all orders
+  - Manage products (CRUD)
+  - Monitor system data
+
+---
+
+### Middleware Protection
+- Restricts access to admin-only pages
+- Prevents unauthorized access
+- Automatically redirects users based on role
+
+---
+
+### CRUD Operations
+
+#### Orders
+- Create orders
+- View orders list
+- Delete orders
+- Customers can only manage their own orders
+- Admin can view all orders
+
+#### Products (Admin Only)
+- Create product
+- View product
+- Update product
+- Delete product
+
+---
+
+### Eloquent Relationships
+- Order belongs to Customer
+- Order belongs to many Products (with quantity)
+- Displays:
+  - Customer name in orders
+  - Products inside each order
+
+---
+
+### Authorization (Policies)
+- Customers can only access their own data
+- Admin has full system access
+- Policies enforce secure data handling
+
+---
+
+### Dashboard
+#### Customer Dashboard
+- Total orders
+- Total spent
+- Recent orders
+
+#### Admin Dashboard
+- Total orders
+- Total revenue
+- Total customers
+- Recent activity
+
+---
+
+### User Interface
+- Clean and responsive design
+- Built using Tailwind CSS
+- Toast notifications for actions like:
+  - Creating orders
+  - Deleting orders
+
+---
+
+### System Flow
+1. User registers or logs in
+2. Customer creates an order
+3. Orders are stored with products and quantities
+4. User views order history
+5. User deletes order
+6. Admin monitors all system data
+7. User logs out
+
+---
+
+## This project demonstrates:
+- Laravel CRUD operations
+- Authentication and authorization
+- Middleware protection
+- Role-based system
+- Eloquent relationships
